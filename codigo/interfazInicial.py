@@ -25,14 +25,24 @@ def inicio(img):
     ]
     return layout
 
+def verNombre(direccion):
+    '''
+    Devuelve el nombre del archivo
+    '''
+    n = direccion.split('.png')
+    n = n[0].split('\\')            
+    return n[-1]
+
 def jugar_interfaz(imagenes):
     layout = [
-         [sg.Column(imagenes.getAvatarLayout(),visible=False,key='colAvatar')],
+         [sg.Column(imagenes.getAvatarLayout(),visible=False,element_justification='center',key='colAvatar')],
+         [sg.Text('',key='letra')],
+         [sg.Button('Nombre',key='nombre')],
         [sg.Button(border_width=0,button_text='VOLVER', button_color=('#FF0','#000'), size=(50, 2), font=('Impact', 20), key='volver')],
     ]
     return layout
 
-def interfaz_principal(titulo, img_juego,imagenes):
+def interfaz_principal(titulo,imagenes):
     colInicial = inicio(titulo)
     layout = [
         [sg.Column(colInicial,justification='center',element_justification='center',key= 'colInicial'),
@@ -46,10 +56,9 @@ def juego():
     ANCHO = 400
     ALTO = 600
     titulo = os.path.join ('media','titulo.png')
-    img_juego = os.path.join('media','imagenes','leon.png')
     directorio = os.path.join('media','imagenes','')
     imagenes = vImg.Visor(directorio)
-    ventana = sg.Window('Palabreando', interfaz_principal(titulo,img_juego,imagenes), size = (ANCHO,ALTO),background_color='#DDD' ,element_justification='center',no_titlebar=False)
+    ventana = sg.Window('Palabreando', interfaz_principal(titulo,imagenes), size = (ANCHO,ALTO),background_color='#DDD' ,element_justification='center',no_titlebar=False)
     ventana.Finalize()
     while True:
         event, values = ventana.read()
@@ -60,5 +69,8 @@ def juego():
         if (event == 'volver'):
             actualizar_columnas(ventana,'colInicial')
         elif event in ('<<<', '>>>'):
-            avatarSelec = imagenes.controles(event, ventana.FindElement('avatarVisor'))
+            selector_imagenes = imagenes.controles(event, ventana.FindElement('avatarVisor'))
+        elif event == 'nombre':
+            print (verNombre(imagenes.getActualRuta()))
+            
     ventana.Close()       

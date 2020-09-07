@@ -68,7 +68,7 @@ class Visor():
         '''
         Retorna el layout del visor
         '''
-        indice = random.randint(0,len(self._imagenes))
+        indice = random.randint(0,len(self._imagenes)-1)
         avatar = os.path.join(self._directorio, self._imagenes[indice])
         galeria = [[sg.Image(filename=avatar,key ='avatarVisor')],
                    [sg.Button('<<<', size=(8, 2), button_color=('black', '#f75404')), sg.Button('>>>', size=(8, 2), button_color=('black', '#f75404'))],
@@ -83,7 +83,7 @@ class Visor():
 
     def getActualRuta(self):
         return os.path.join(self._directorio, self._imagenes[self._i])
-
+    
 '''
  if __name__ == '__main__':
 
