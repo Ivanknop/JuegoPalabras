@@ -50,18 +50,12 @@ class Visor():
         al mismo tiempo, retorna la ruta de la imagen que esta actualmente en el visor'''
         #El indice self._i se inicializa en 0 al instanciar el objeto
         if event == '>>>':
-            self._i += 1
+            indice = random.randint(0,self._cantImagenes)
+            self._i = indice
             if self._i >= self._cantImagenes:
                 self._i -= self._cantImagenes
             avatar = os.path.join(self._directorio, self._imagenes[self._i])
-        elif event == '<<<':
-            self._i-= 1
-            if self._i < 0:
-                self._i = self._cantImagenes + self._i
-            avatar =  os.path.join(self._directorio, self._imagenes[self._i])
-        else:
-            avatar =  os.path.join(self._directorio, self._imagenes[self._i])
-        visor.Update(filename=avatar)
+            visor.Update(filename=avatar)
         return avatar
 
     def getAvatarLayout(self):
@@ -70,8 +64,8 @@ class Visor():
         '''
         indice = random.randint(0,len(self._imagenes)-1)
         avatar = os.path.join(self._directorio, self._imagenes[indice])
-        galeria = [[sg.Image(filename=avatar,key ='avatarVisor')],
-                   [sg.Button('<<<', size=(8, 2), button_color=('black', '#f75404')), sg.Button('>>>', size=(8, 2), button_color=('black', '#f75404'))],
+        galeria = [[sg.Image(filename=avatar,key ='avatarVisor')]
+                   #[sg.Button('<<<', size=(8, 2), button_color=('black', '#f75404')), sg.Button('>>>', size=(8, 2), button_color=('black', '#f75404'))],
             ]
         return galeria
 
@@ -83,19 +77,3 @@ class Visor():
 
     def getActualRuta(self):
         return os.path.join(self._directorio, self._imagenes[self._i])
-    
-'''
- if __name__ == '__main__':
-
-
-
-     v = Visor(directorio)
-     lay = [[sg.Column(v.galAvatar())],]
-     win=sg.Window('asd',layout=lay).Finalize()
-
-     while True:
-
-         e , va = win.read()
-         if e in ('<<<','>>>'):
-              v.controles(e, win.FindElement('avatarVisor'))
-'''
