@@ -13,7 +13,7 @@ class Imagen():
         '''
         n = nom.split('.png')
         n = n[0].split('\\')
-        self.nombre = n[-1]
+        self.nombre = n[-1].upper()
 
     def getNombre(self):
         return self.nombre
